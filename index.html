@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students' Page</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Students</h2>
+        
+        <!-- Filtro de pesquisa -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="search student by name...">
+            <button type="button" id="searchButton" class="page-button" onclick="getStudentByName()">Search Student</button>
+            <button type="button" id="clearButton" class="page-button" onclick="clearSearch()">Clear Filter</button>
+        </div>
+        
+        <!-- Student table -->
+        <table id="studentTable" class="student-table" aria-label="Student Data Table">
+            <thead>
+                <tr>
+                    <th tabindex="0">Name</th>
+                    <th tabindex="0">CPF</th>
+                    <th tabindex="0">Grade Level</th>
+                    <th tabindex="0">Enrollment</th>
+                    <th class="student-grade" tabindex="0">Grade 1</th>
+                    <th class="student-grade" tabindex="0">Grade 2</th>
+                    <th class="student-grade" tabindex="0">Grade 3</th>
+                    <th class="student-grade" tabindex="0">Grade 4</th>
+                    <th class="student-grade" tabindex="0">Final Grade</th>
+                    <th class="student-grade" tabindex="0">Action</th>
+                </tr>
+            </thead>
+
+        </table>
+
+        <!-- Formulário para adicionar novo aluno -->
+        <div class="add-student-container">
+            <h3 class="title">Add New Student</h3>
+            <form id="addStudentForm"> 
+                <div class="add-student-form-container">
+                    <div class="add-student-input-container div-name">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" placeholder="Enter student's name" required />
+                    </div>                    
+                    <div class="add-student-input-container div-cpf">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" placeholder="Enter student's CPF like (only numbers)" required />                    
+                    </div>
+                    <div class="add-student-input-container div-grade-level">
+                        <label for="grade-level">Grade Level:</label>
+                        <select id="grade-level" name="grade-level" required>
+                            <option value="select"> - </option>
+                            <option value="1st grade">1st grade</option>
+                            <option value="2st grade">2st grade</option>
+                            <option value="3st grade">3st grade</option>
+                            <option value="4st grade">4st grade</option>
+                            <option value="5st grade">5st grade</option>
+                            <option value="6st grade">6st grade</option>
+                            <option value="7st grade">7st grade</option>
+                            <option value="8st grade">8st grade</option>
+                            <option value="9st grade">9st grade</option>
+                        </select>
+                    </div>  
+                    <div class="add-student-input-container div-btn">
+                        <button type="submit" onclick="postStudentForm()">Add New Student</button>
+                    </div>
+                    
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <!-- <script src="script.js"></script> -->
+    <script src="script.js"></script>
+</body>
+</html>
