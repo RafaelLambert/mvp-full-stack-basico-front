@@ -33,8 +33,6 @@ const getStudentList = async () => {
 }
 
 
-
-
 /*
   --------------------------------------------------------------------------------------
   Função para buscar estudantes pelo nome
@@ -104,9 +102,10 @@ const postStudent = async (inputName, inputCpf, inputGradeLevel) => {
       method: 'POST',
       body: formData
     });
-
+    console.log(response.status);
     if (response.ok) {
       alert("Student added successfully!");
+      getStudentList();
     } else if (response.status === 409) {
       alert("Cpf already been added!");
     } else if (response.status === 400) {
@@ -115,10 +114,13 @@ const postStudent = async (inputName, inputCpf, inputGradeLevel) => {
     } else {
       alert("Student not added. Try again.");
     }
+      clearStudentFormInputs();
   } catch (error) {
     console.error('Error:', error);
     alert("Error trying to add the student. Please try again later.");
   }
+
+  clearStudentFormInputs();
 };
 
 /*
@@ -226,8 +228,9 @@ const handleSaveAction = (studentId,studentName) => {
       alert("Grades saved successfully!");
   } else {
       alert("Please enter valid grades (0 to 10) before saving.");
-      getStudentList();
+      
   }
+  getStudentList();
 };
 
 /*
@@ -240,6 +243,7 @@ const handleDeleteAction = (studentName, rowElement) => {
     deleteStudent(studentName);
     rowElement.remove();
     alert("Student removed successfully!");
+    getStudentList();
 }
 };
 
@@ -254,22 +258,29 @@ const postStudentForm = async () => {
   let inputCpf = document.getElementById('cpf').value.trim();
   let inputGradeLevel = document.getElementById('grade-level').value.trim();
 
-  inputCpf = inputCpf.toString();
+  
+
+  const isNumericCPF = (cpf) => /^\d+$/.test(cpf);
+
 
   if (!inputName) {
-    alert("Please enter the student's name!");
+    alert("Please, enter the student's name!");
     return;
   } 
+  if(!isNumericCPF(inputCpf)){
+    alert("Please, CPF must contain only numbers")
+    return;
+  }
   if (!isValidCPF(inputCpf)){
-    alert("please enter with a valid CPF")
+    alert("Please, enter a valid CPF")
     return;
   }
   if(inputGradeLevel == 'select'  ){
-    alert("Please select the student's grade level.");
+    alert("Please, select the student's grade level.");
     return;
   } 
   inputCpf = inputCpf.replace( /(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-  await postStudent(inputName, inputCpf, inputGradeLevel);  
+  postStudent(inputName, inputCpf, inputGradeLevel);  
 }
 
 /*
@@ -315,9 +326,7 @@ const insertList = (id, name, cpf, gradeLevel, enrollment, grade1, grade2, grade
   insertButtons(actionsCell, id, name);
 
   // Limpa os campos do formulário
-  document.getElementById("name").value = "";
-  document.getElementById("cpf").value = "";
-  document.getElementById("grade-level").value = "select";
+  clearStudentFormInputs();
 };
 
 const isValidCPF = (cpf) => {
@@ -365,6 +374,11 @@ const clearTableRows = () => {
   }
 };
 
+const clearStudentFormInputs = () => {
+  document.getElementById("name").value = "";
+  document.getElementById("cpf").value = "";
+  document.getElementById("grade-level").value = "select";
+}
 
 /*
 --------------------------------------------------------------------------------------
